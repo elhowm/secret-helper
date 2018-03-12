@@ -1,0 +1,4 @@
+domain: example.com
+login: <login>
+password: <password>
+critical_temp: 75
