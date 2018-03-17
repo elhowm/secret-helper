@@ -1,7 +1,7 @@
 class StatusChecker
   attr_reader :driver, :max_temp
 
-  PAGE = "http://#{SETTINGS['domain']}/miner_status.html"
+  PAGE = "http://#{SETTINGS['domain']}/cgi-bin/minerStatus.cgi"
 
   def initialize(driver)
     @driver = driver
