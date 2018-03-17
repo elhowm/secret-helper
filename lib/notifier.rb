@@ -12,8 +12,8 @@ class Notifier
   def self.notify!(temperature, new_frequency)
     Mail.defaults { delivery_method(:smtp, Notifier::OPTIONS) }
     Mail.deliver do
-      to 'elhowm@gmail.com'
-      from 'johnytoastfish@gmail.com'
+      to SETTINGS['receiver_email']
+      from SETTINGS['mail_login']
       subject 'Oh, Crape!'
       body "Hello, temperature was '#{temperature}C'. Frequency changed to #{new_frequency}."
     end
