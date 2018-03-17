@@ -8,7 +8,7 @@ require 'mail'
 SETTINGS = YAML::load_file(File.join(__dir__, 'settings.yml')).freeze
 
 require_relative 'lib/status_checker'
-require_relative 'lib/freequency_controller'
+require_relative 'lib/frequency_controller'
 require_relative 'lib/notifier'
 
 # Fetch and parse HTML document
@@ -17,8 +17,8 @@ checker = StatusChecker.new(driver)
 
 exit(0) unless checker.critical?
 
-controller = FreequencyController.new(driver)
+controller = FrequencyController.new(driver)
 controller.put_down!
 
-Notifier.notify!(checker.max_temp, controller.new_freequency)
+Notifier.notify!(checker.max_temp, controller.new_frequency)
 puts 'DONE'

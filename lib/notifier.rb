@@ -9,13 +9,13 @@ class Notifier
     enable_starttls_auto: true
   }.freeze
 
-  def self.notify!(temperature, new_freequency)
+  def self.notify!(temperature, new_frequency)
     Mail.defaults { delivery_method(:smtp, Notifier::OPTIONS) }
     Mail.deliver do
       to 'elhowm@gmail.com'
       from 'johnytoastfish@gmail.com'
       subject 'Oh, Crape!'
-      body "Hello, temperature was '#{temperature}C'. Freequency changed to #{new_freequency}."
+      body "Hello, temperature was '#{temperature}C'. Frequency changed to #{new_frequency}."
     end
   end
 end
