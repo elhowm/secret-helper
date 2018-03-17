@@ -3,33 +3,22 @@
 require 'selenium-webdriver'
 require 'yaml'
 require 'byebug'
+require 'mail'
 
-settings = YAML::load_file File.join(__dir__, 'settings.yml')
+SETTINGS = YAML::load_file(File.join(__dir__, 'settings.yml')).freeze
+
+require_relative 'lib/status_checker'
+require_relative 'lib/freequency_controller'
+require_relative 'lib/notifier'
 
 # Fetch and parse HTML document
-alarm = false
 driver = Selenium::WebDriver.for :chrome
+checker = StatusChecker.new(driver)
 
-driver.navigate.to "http://#{settings['domain']}/miner_status.html"
-temps = driver.find_elements(:css, 'tr.cbi-section-table-row.cbi-rowstyle-1 > td:nth-child(7)')
-temps.each do |temp|
-  alarm ||= temp.text.to_i >= settings['critical_temp']
-end
-exit(0) unless alarm
+exit(0) unless checker.critical?
 
-driver.find_element(:link, "Miner Configuration").click
+controller = FreequencyController.new(driver)
+controller.put_down!
 
-frequency_select = driver.find_element(:id, 'ant_freq')
-list = frequency_select.text.split("\n").map(&:strip)
-
-current_step = frequency_select.attribute('value') + 'M'
-current_step = 'Default setting' if current_step == '0M'
-
-next_step_index = list.index(current_step) - 2
-next_step = next_step_index <= 0 ? '100M' : list[next_step_index]
-
-frequency_select.send_keys next_step
-
-driver.find_element(:css, 'input.cbi-button.cbi-button-save.right').click
-
+Notifier.notify!(checker.max_temp, controller.new_freequency)
 puts 'DONE'

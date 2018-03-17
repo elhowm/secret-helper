@@ -1,4 +1,6 @@
 domain: example.com
 login: <login>
 password: <password>
+mail_login: <login>
+mail_password: <password>
 critical_temp: 75
