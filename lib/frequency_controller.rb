@@ -10,6 +10,7 @@ class FrequencyController
   def put_down!
     # driver.navigate.to PAGE
     driver.find_element(:link, "Miner Configuration").click
+    driver.find_element(:link, "Advanced Settings").click
 
     @new_frequency = calc_down_step
     frequency_selector.send_keys calc_down_step
