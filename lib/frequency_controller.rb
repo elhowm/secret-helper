@@ -1,9 +1,10 @@
 class FrequencyController
   # PAGE = nil
-  attr_reader :driver, :new_frequency
+  attr_reader :driver, :logger, :new_frequency
 
-  def initialize(driver)
+  def initialize(driver, logger)
     @driver = driver
+    @logger = logger
     @new_frequency = nil
   end
 
@@ -16,6 +17,7 @@ class FrequencyController
     frequency_selector.send_keys calc_down_step
 
     driver.find_element(:css, 'input.cbi-button.cbi-button-save.right').click
+    logger.info "Frequency changed to #{new_frequency}"
   end
 
   private

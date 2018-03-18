@@ -1,10 +1,11 @@
 class StatusChecker
-  attr_reader :driver, :max_temp
+  attr_reader :driver, :logger, :max_temp
 
   PAGE = "http://#{SETTINGS['domain']}/cgi-bin/minerStatus.cgi"
 
-  def initialize(driver)
+  def initialize(driver, logger)
     @driver = driver
+    @logger = logger
     @max_temp = 0
   end
 
@@ -16,6 +17,15 @@ class StatusChecker
       @max_temp = temp.text.to_i if temp.text.to_i > max_temp
       alarm ||= temp.text.to_i >= SETTINGS['critical_temp']
     end
+    log! alarm
     alarm
+  end
+
+  def log!(alarm)
+    if alarm
+      logger.warn("Status critical. Temperature is #{max_temp}C.")
+    else
+      logger.info('Status normal. Relaxing.')
+    end
   end
 end
