@@ -4,12 +4,6 @@
 
 > docker build -t secret-helper .
 
-> docker run --name='secret-helper' --net=host -d secret-helper
-
-## Login to container and setup settings file
-
-> docker exec -it secret-helper bash
-
-> cp settings.yml.example settings.yml
-
-> vim settings.yml
+> docker run --name='secret-helper' --net=host
+-v /path/to/settings.yml:/secret-helper/settings.yml 
+-d secret-helper
