@@ -3,9 +3,12 @@ class Watcher
 
   attr_reader :driver, :logger
 
+  LOGFILE_SIZE = 1024 * 1000 # 1 megabyte
+  LOGFILES_COUNT = 7
+
   def initialize
     @driver = Selenium::WebDriver.for :chrome
-    @logger = Logger.new('status.log')
+    @logger = Logger.new('status.log', LOGFILES_COUNT, LOGFILE_SIZE)
   end
 
   def perform
