@@ -13,9 +13,11 @@ require_relative 'lib/notifier'
 require_relative 'lib/watcher'
 
 loop do
-  Watcher.instance.perform
-  sleep(180) # every 3 minutes
-rescue => exception
-  Notifier.instance.notify_error! exception
-  sleep(5)
+  begin
+    Watcher.instance.perform
+    sleep(180) # every 3 minutes
+  rescue => exception
+    Notifier.instance.notify_error! exception
+    sleep(5)
+  end
 end
