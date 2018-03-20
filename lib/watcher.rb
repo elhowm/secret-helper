@@ -7,7 +7,10 @@ class Watcher
   LOGFILES_COUNT = 7
 
   def initialize
-    @driver = Selenium::WebDriver.for :chrome
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      chromeOptions: { args: %w[headless disable-gpu no-sandbox] }
+    )
+    @driver = Selenium::WebDriver.for :chrome, desired_capabilities: capabilities
     @logger = Logger.new('status.log', LOGFILES_COUNT, LOGFILE_SIZE)
   end
 
