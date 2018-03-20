@@ -12,7 +12,8 @@ require_relative 'lib/frequency_controller'
 require_relative 'lib/notifier'
 require_relative 'lib/watcher'
 
+watcher = Watcher.new
 loop do
-  Watcher.instance.perform
+  watcher.perform
   sleep(180) # every 3 minutes
 end

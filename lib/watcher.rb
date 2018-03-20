@@ -1,6 +1,4 @@
 class Watcher
-  include Singleton
-
   attr_reader :driver, :logger
 
   LOGFILE_SIZE = 1024 * 1000 # 1 megabyte
