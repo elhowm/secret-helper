@@ -1,4 +1,6 @@
 class Watcher
+  include Singleton
+
   attr_reader :driver, :logger
 
   LOGFILE_SIZE = 1024 * 1000 # 1 megabyte
@@ -19,7 +21,5 @@ class Watcher
 
     Notifier.instance.notify!(checker.max_temp, controller.new_frequency)
     logger.info "Info letter sent. Relaxing."
-  rescue => exception
-    Notifier.instance.notify_error! exception
   end
 end
