@@ -19,7 +19,9 @@ class Watcher
     controller = FrequencyController.new(driver, logger)
     controller.put_down!
 
-    Notifier.notify!(checker.max_temp, controller.new_frequency)
+    Notifier.instance.notify!(checker.max_temp, controller.new_frequency)
     logger.info "Info letter sent. Relaxing."
+  rescue => exception
+    Notifier.instance.notify_error! exception
   end
 end

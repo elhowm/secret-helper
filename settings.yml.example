@@ -2,4 +2,5 @@ domain: example.com
 mail_login: <login>
 mail_password: <password>
 receiver_email: <email>
+dev_email: <dev_email>
 critical_temp: 75
