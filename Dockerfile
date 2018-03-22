@@ -15,8 +15,8 @@ RUN /bin/bash -l -c "rvm install 2.4.1"
 
 ARG CACHE_DATE=2018-03-20
 # Clone and configure application
-RUN git clone https://github.com/elhowm/secret-helper --single-branch
+RUN git clone https://github.com/elhowm/secret-helper
 WORKDIR ./secret-helper
 RUN /bin/bash -l -c "gem install bundler"
 RUN /bin/bash -l -c "bundle"
-ENTRYPOINT /bin/bash -l -c "./app.rb"
+ENTRYPOINT /bin/bash -l -c "/secret-helper/app.rb"
