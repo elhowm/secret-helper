@@ -15,6 +15,7 @@ class Watcher
   end
 
   def perform
+    Settings.instance.refresh
     checker = StatusChecker.new(driver, logger)
 
     return unless checker.critical?
@@ -23,7 +24,6 @@ class Watcher
     controller.put_down!
 
     Notifier.instance.notify!(checker.max_temp, controller.new_frequency)
-    Settings.instance.refresh
     logger.info "Info letter sent. Relaxing."
   end
 end
