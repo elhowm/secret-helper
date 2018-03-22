@@ -23,6 +23,7 @@ class Watcher
     controller.put_down!
 
     Notifier.instance.notify!(checker.max_temp, controller.new_frequency)
+    Settings.instance.refresh
     logger.info "Info letter sent. Relaxing."
   end
 end

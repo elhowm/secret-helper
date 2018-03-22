@@ -1,7 +1,7 @@
 class StatusChecker
   attr_reader :driver, :logger, :max_temp
 
-  PAGE = "http://#{SETTINGS['domain']}/cgi-bin/minerStatus.cgi"
+  PAGE = "http://#{Settings.instance.info['domain']}/cgi-bin/minerStatus.cgi"
 
   def initialize(driver, logger)
     @driver = driver
@@ -15,7 +15,7 @@ class StatusChecker
     temps = driver.find_elements(:css, 'tr.cbi-section-table-row.cbi-rowstyle-1 > td:nth-child(7)')
     temps.each do |temp|
       @max_temp = temp.text.to_i if temp.text.to_i > max_temp
-      alarm ||= temp.text.to_i >= SETTINGS['critical_temp']
+      alarm ||= temp.text.to_i >= Settings.instance.info['critical_temp']
     end
     log! alarm
     alarm
