@@ -18,6 +18,6 @@ loop do
     sleep(180) # every 3 minutes
   rescue => exception
     Notifier.instance.notify_error! exception
-    sleep(5)
+    sleep(20)
   end
 end
